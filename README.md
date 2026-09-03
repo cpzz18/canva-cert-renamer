@@ -11,8 +11,8 @@ Hasil unduhan Canva yang biasanya hanya berupa nomor halaman (contoh: 1.pdf, 2.p
 - Deteksi otomatis kolom Nama Mahasiswa, NIM, dan Nomor Urut.
 - Dukungan format sertifikat: PDF, JPG, JPEG, dan PNG (format asli tetap dipertahankan).
 - Pilihan format nama baru:
-  1. NIM dan Nama (contoh: 263307069_Diny Agata Rahmawati.pdf)
-  2. Nama saja (contoh: Diny Agata Rahmawati.pdf)
+  1. NIM dan Nama (contoh: Nim_Nama.pdf)
+  2. Nama saja (contoh: Nama.pdf)
 - Preview perubahan nama sebelum diproses.
 - Pencegahan file tertimpa (overwrite protection).
 
