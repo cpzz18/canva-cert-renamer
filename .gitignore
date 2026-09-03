@@ -1,0 +1,34 @@
+# Binary & Executables
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+rename-tool
+himasertif
+bin/
+
+# Temporary & Lock Files
+~$*.xlsx
+~$*.xls
+*.tmp
+*.swp
+*.bak
+
+# Data Sertifikat & Spreadsheet (Privasi Data Mahasiswa)
+sertifikat/
+*.pdf
+*.jpg
+*.jpeg
+*.png
+*.xlsx
+*.xls
+*.csv
+
+# OS Generated
+.DS_Store
+Thumbs.db
+
+# IDE & Editor
+.vscode/
+.idea/
