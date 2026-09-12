@@ -47,11 +47,12 @@ go run main.go ./sertifikat
 ### 3. Alur Proses
 
 1. Program membaca file Excel dan mendeteksi file sertifikat di folder.
-2. Pilih format nama file baru:
+2. Anda akan diminta memasukkan opsi **mulai dari data Excel nomor berapa** (berguna jika Anda membagi unduhan Canva menjadi beberapa Part/ZIP). Kosongkan (tekan Enter) jika sertifikat dimulai dari awal (Part 1).
+3. Pilih format nama file baru:
    - Tekan 1 (atau langsung Enter): format NIM_Nama
    - Tekan 2: format Nama saja
-3. Program menampilkan preview perubahan nama.
-4. Tekan y (atau Enter) untuk memproses rename.
+4. Program menampilkan preview perubahan nama.
+5. Tekan y (atau Enter) untuk memproses rename.
 
 ## Contoh Hasil Rename
 

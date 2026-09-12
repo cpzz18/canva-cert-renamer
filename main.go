@@ -52,7 +52,9 @@ func main() {
 	}
 
 	withNIM := chooseFormat(scanner)
-	items := matchStudentsWithFiles(students, files, targetDir, withNIM)
+	startOffset := getOffset(scanner)
+
+	items := matchStudentsWithFiles(students, files, targetDir, withNIM, startOffset)
 	if len(items) == 0 {
 		fmt.Println("\n[PERINGATAN] Tidak ada file yang cocok dengan Nama, Nomor, atau NIM mahasiswa.")
 		return
@@ -83,8 +85,8 @@ func chooseFormat(scanner *bufio.Scanner) bool {
 	}
 
 	fmt.Println("\nPilihan format nama file:")
-	fmt.Println("  [1] NIM dan Nama (contoh: 263307069_Diny Agata Rahmawati.ext)")
-	fmt.Println("  [2] Nama saja    (contoh: Diny Agata Rahmawati.ext)")
+	fmt.Println("  [1] NIM dan Nama (contoh: 263307088_Agung Sabilah.ext)")
+	fmt.Println("  [2] Nama saja    (contoh: Agung Sabilah.ext)")
 	fmt.Print("Pilih format [1/2] (default 1): ")
 
 	if scanner.Scan() {
@@ -92,6 +94,20 @@ func chooseFormat(scanner *bufio.Scanner) bool {
 		return ans != "2" && ans != "nama" && ans != "nama saja" && ans != "nama aja"
 	}
 	return true
+}
+
+func getOffset(scanner *bufio.Scanner) int {
+	fmt.Print("\n(Opsional) Jika ini file lanjutan Canva (contoh part 2),\nmasukkan mulai dari data Excel nomor berapa? (Kosongkan/Enter = mulai dari 1): ")
+	if scanner.Scan() {
+		ans := strings.TrimSpace(scanner.Text())
+		if ans != "" {
+			if val, err := strconv.Atoi(ans); err == nil && val > 0 {
+				return val
+			}
+			fmt.Println("[INFO] Input tidak valid, menggunakan default mulai dari 1.")
+		}
+	}
+	return 1
 }
 
 func resolvePaths() (string, string) {
@@ -209,13 +225,18 @@ func listTargetFiles(dir string, excelPath string) ([]string, error) {
 	return files, nil
 }
 
-func matchStudentsWithFiles(students []Student, files []string, dir string, withNIM bool) []RenameItem {
+func matchStudentsWithFiles(students []Student, files []string, dir string, withNIM bool, startOffset int) []RenameItem {
 	var items []RenameItem
 	used := make(map[string]bool)
 
 	for _, s := range students {
 		normNama := cleanStr(s.Nama)
-		noStr := strconv.Itoa(s.No)
+
+		canvaNumber := -1
+		if s.No >= startOffset {
+			canvaNumber = s.No - startOffset + 1
+		}
+		canvaNumberStr := strconv.Itoa(canvaNumber)
 
 		for _, f := range files {
 			if used[f] {
@@ -225,7 +246,7 @@ func matchStudentsWithFiles(students []Student, files []string, dir string, with
 			base := strings.TrimSuffix(f, filepath.Ext(f))
 			normBase := cleanStr(base)
 
-			if normBase == normNama || strings.Contains(normBase, normNama) || normBase == noStr || strings.Contains(base, s.NIM) {
+			if normBase == normNama || strings.Contains(normBase, normNama) || strings.Contains(base, s.NIM) || (canvaNumber > 0 && normBase == canvaNumberStr) {
 				used[f] = true
 				ext := filepath.Ext(f)
 
